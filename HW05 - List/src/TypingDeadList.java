@@ -60,6 +60,7 @@ public class TypingDeadList extends CDLinkedList {
 			} else if ((char) itr.currentNode.data == w.charAt(index)) {
 				index++;
 			} else {
+				foundFirstChar = false;
 				index = 0;
 			}
 
