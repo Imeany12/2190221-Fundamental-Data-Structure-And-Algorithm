@@ -21,23 +21,26 @@ public class BankQueue { // must work for any implementation of DeQ
 		numberOfPeople += special.size();
 		double numberOfQueue = counters.length + 1;
 		double neededQueue = Math.round(numberOfPeople / numberOfQueue);
-		ArrayList<Integer> temp = new ArrayList<Integer>();
 		for (DeQ counter : counters) {
 			if (special.size() == neededQueue) {
 				break;
 			} else {
-				while (counter.size() > neededQueue) {
-					temp.add(counter.removeLast());
-				}
-				while (special.size() < neededQueue && !temp.isEmpty()) {
-					special.insertLast(temp.get(temp.size() - 1));
-					temp.remove(temp.size() - 1);
-				}
-				while (temp.size() > 0) {
-					counter.insertLast(temp.get(temp.size()-1));
-					temp.remove(temp.size() - 1);
+				// Rotate until the queue that exceed neededQueue
+				for (int i = 0; i < neededQueue; i++) {
+					counter.insertLast(counter.removeFirst());
 				}
 				
+				// Move the exceeded queue to special queue
+				while (special.size() < neededQueue && counter.size() > neededQueue) {
+					special.insertLast(counter.removeFirst());
+				}
+				
+				// If the special queue is full shift the queue in counter back
+				if (counter.size() > neededQueue) {
+					for (int i = 0; i < counter.size() - neededQueue; i++) {
+						counter.insertLast(counter.removeFirst());
+					}
+				}
 			}
 		}
 		if (special.size() == 0) {
