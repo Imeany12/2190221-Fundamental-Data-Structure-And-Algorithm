@@ -6,7 +6,6 @@ public class StackUtility {
 
 		int numOfPair = s1.size()/2;
 		String word = "";
-		int[] s3 = new int[numOfPair];
 		for (int i = 0; i < numOfPair;i++) {
 			int i1 = s1.top();
 			s1.pop();
